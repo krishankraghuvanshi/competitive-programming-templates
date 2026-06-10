@@ -1,4 +1,3 @@
 # competitive-programming-templates
 
-[this repo is dedicated to cp templates frequently used.
-](https://usaco.guide/CPH.pdf#page=60)
+[details](https://usaco.guide/CPH.pdf#page=60)
