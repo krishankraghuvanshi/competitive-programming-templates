@@ -1,3 +1,3 @@
 # competitive-programming-templates
 
-[](https://usaco.guide/CPH.pdf)
+[Material](https://usaco.guide/CPH.pdf)
