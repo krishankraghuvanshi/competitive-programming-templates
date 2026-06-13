@@ -60,6 +60,65 @@ class LCA:
                 u = self.up[u][i]
 
         return self.up[u][0]
+'''----------------------------------------------------------------'''
+               #imo this is more cool way of writing it
+import sys, collections, math
+
+input = lambda:sys.stdin.readline().strip()
+
+sys.setrecursionlimit(10**7)
+
+def solve():
+    N, M = map(int, input().split())
+
+    G = collections.defaultdict(lambda:[])
+    for _ in range(N-1):
+        u, v = map(int, input().split())
+        u, v = u-1, v-1
+        G[u].append(v)
+        G[v].append(u)
+
+    L = math.ceil(math.log2(N)) 
+
+    parent = [[-1] * (L+1) for _ in range(N)]
+    level = [0] * N
+
+    def dfs(u, p):
+        parent[u][0] = p
+        for i in range(1, L+1):
+            if parent[u][i-1] != -1:
+                parent[u][i] = parent[parent[u][i-1]][i-1]
+
+        for v in G[u]:
+            if v == p:
+                continue
+            level[v] = level[u]+1
+            dfs(v, u)
+    
+    def lca(u, v):
+        if level[u] < level[v]:
+            u, v = v, u
+        for i in range(L, -1, -1):
+            if level[u] - (1<<i) >= level[v]:
+                u = parent[u][i]    
+        if u == v:
+            return u
+        for i in range(L, -1, -1):
+            if parent[u][i] != -1 and parent[u][i] != parent[v][i]:
+                u = parent[u][i]
+                v = parent[v][i]
+        return parent[u][0]
+    
+    count = [0] * N 
+    def dfs1(u, p):
+        for v in G[u]:
+            if v == p:
+                continue
+            dfs1(v, u)
+            count[u] += count[v]
+    
+    dfs(0, -1)
+
 
 
       
