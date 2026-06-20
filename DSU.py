@@ -49,3 +49,32 @@ class DisjointSetUnion:
 			if j!=k:
 				return j
 		return -1
+'''-------------------------------------------------------------------------'''
+
+import sys, collections, heapq
+
+sys.setrecursionlimit(10**7)
+
+class UnionFind:
+    def __init__(self, N):
+        self.parent = [i for i in range(N)]
+        self.size = [1 for i in range(N)]
+        self.components = N-1
+        self.mx = 1
+    def find(self, u):
+        if self.parent[u]!=u:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]     
+    def union(self, u, v):
+        root_u, root_v = self.find(u), self.find(v)
+        if self.size[root_u] < self.size[root_v]:
+            root_u, root_v = root_v, root_u
+        if root_u != root_v:
+            self.parent[root_v] = root_u
+            self.size[root_u] += self.size[root_v]
+            self.mx = max(self.mx, self.size[root_u])
+            self.components -= 1
+    def get_components(self):
+        return self.components
+    def get_max_component_size(self):
+        return self.mx
