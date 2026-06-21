@@ -77,4 +77,27 @@ print(ft.range_sum(1, 3)) # 2+3+4 = 9
 # add +5 at index 2
 ft.update(2, 5)
 
-print(ft.range_sum(1, 3)) # 2+8+4 = 14
+'''-----------------------without explaination--------------------------'''
+class FenwickTree:
+    def __init__(self, n):
+        self.n = n
+        self.bit = [0] * (n + 1)
+
+    def update(self, idx, delta):
+        while idx <= self.n:
+            self.bit[idx] += delta
+            idx += idx & -idx
+
+    def query(self, idx):
+        res = 0
+        while idx > 0:
+            res += self.bit[idx]
+            idx -= idx & -idx
+        return res
+
+    def range_sum(self, l, r):
+        if l > r:
+            return 0
+        return self.query(r) - self.query(l - 1)
+
+
