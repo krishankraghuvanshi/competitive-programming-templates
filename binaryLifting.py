@@ -119,3 +119,52 @@ class LCA:
                 u = self.up[u][i]
 
         return self.up[u][0]
+
+'''my way'''
+g = defaultdict(list)
+
+for u, v, w in edges:
+    g[u].append((v, w))
+    g[v].append((u, w))
+
+LOG = 30
+
+parent = [[-1] * (LOG) for _ in range(N)]
+level = [0]*N
+
+f = defaultdict(lambda:Counter())
+
+
+def dfs(u, p):
+    parent[u][0] = p
+
+    for i in range(1, LOG):
+        if parent[u][i-1] != -1:
+            parent[u][i] = parent[parent[u][i-1]][i-1]
+
+    for v, w in g[u]:
+        if v == p:
+            continue
+        level[v] = level[u]+1
+
+        for j, k in f[u].items():
+            f[v][j] = k
+        f[v][w] += 1
+
+        dfs(v, u)
+
+def lca(u, v):
+    if level[u] < level[v]:
+        u, v = v, u    
+    for i in range(LOG-1, -1, -1):
+        if level[u] - (1<<i) >= level[v]:
+            u = parent[u][i]
+    if u == v:
+        return u        
+    for i in range(LOG-1, -1, -1):
+        if parent[u][i] != parent[v][i]:
+            u = parent[u][i]
+            v = parent[v][i]
+    return parent[u][0]        
+
+dfs(0, -1)
