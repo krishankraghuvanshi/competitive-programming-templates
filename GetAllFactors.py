@@ -1,3 +1,4 @@
+'''all'''
 def f(i):
   x = set()
 
@@ -12,4 +13,31 @@ def f(i):
       x.add(i)
 
   return x
+
+'''prime'''
+
+
+maxn = 100005
+
+
+x = defaultdict(list)
+
+primes = [True]*maxn
+
+primes[0], primes[1] = False, False
+
+for i in range(2, maxn):
+    if not primes[i]:
+        continue
+   
+        
+    j = i
+    while j < maxn:
+        if i != j:
+            primes[j] = False
+        x[j].append(i)
+        
+        
+        j += i
+      
   
