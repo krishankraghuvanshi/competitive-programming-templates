@@ -1,3 +1,24 @@
+class RollingHashing:
+    def __init__(self, s):
+        self.s = s
+        self.N = len(s)
+        self.MOD = 1000000007
+        self.BASE = 911382323    
+        self.HASH = [0]*(self.N+1)
+        self.POWER = [1]*(self.N+1)
+    
+        
+        for i in range(self.N):
+            self.HASH[i+1] = (self.HASH[i]*self.BASE + ord(s[i])-ord('a')+1) % self.MOD
+            self.POWER[i+1] = (self.POWER[i]*self.BASE) % self.MOD
+
+    def subHash(self, l, r):
+        SHIFT = self.POWER[r-l+1]
+        return (self.HASH[r+1] - self.HASH[l]*SHIFT) % self.MOD 
+
+
+
+
 class RollingHash:
 
     def __init__(self, nums, base=911382323, mod=10**9 + 7):
