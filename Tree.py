@@ -1,23 +1,3 @@
-# -------------------------------------------------
-# Advanced Tree Template
-# -------------------------------------------------
-#
-# Includes:
-# 1. DFS Order / Euler Tour
-# 2. Parent
-# 3. Depth
-# 4. Subtree Size
-# 5. Binary Lifting
-# 6. LCA (Lowest Common Ancestor)
-# 7. kth Parent Query
-# 8. Distance Between Nodes
-#
-# Preprocessing -> O(n log n)
-# LCA Query     -> O(log n)
-# kth Parent    -> O(log n)
-# -------------------------------------------------
-
-
 from collections import defaultdict
 import sys
 
@@ -155,34 +135,5 @@ class Tree:
         )
 
 
-# ---------------- Example ----------------
-
-n = 7
-
-tree = Tree(n)
-
-edges = [
-    [0, 1],
-    [0, 2],
-    [1, 3],
-    [1, 4],
-    [2, 5],
-    [2, 6]
-]
-
-for u, v in edges:
-    tree.add_edge(u, v)
-
-tree.build(0)
-
-print("Depth:", tree.depth)
-
-print("Subtree:", tree.subtree)
-
-print("LCA of 3 and 4:", tree.lca(3, 4))
-
-print("LCA of 3 and 6:", tree.lca(3, 6))
-
-print("Distance between 3 and 6:", tree.distance(3, 6))
 
 print("2nd parent of 4:", tree.kth_parent(4, 2))
